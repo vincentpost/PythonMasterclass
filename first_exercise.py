@@ -18,4 +18,4 @@ if name == "Vincent":
 elif name == "Anushree":
     print("Anushree is the AWS support person during the Python Masterclass")
 else:
-    print("Name is unknown, not sure what to print about this person.")
+    print("Name is unknown, not sure what message to print for this person.")
