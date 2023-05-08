@@ -17,5 +17,7 @@ if name == "Vincent":
     print("Vincent is one of the instructors of the Python Masterclass")
 elif name == "Anushree":
     print("Anushree is the AWS support person during the Python Masterclass")
+elif name == "Georgianna":
+    print("Georgianna is a participant in the Python Masterclass")
 else:
     print("Name is unknown, not sure what to print about this person.")
