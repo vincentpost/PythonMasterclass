@@ -11,11 +11,13 @@ to the conditionals list below and adding a message to be printed to the
 screen. 
 """
 
-name = "YourName"
+name = "Rabindra"
 
 if name == "Vincent":
     print("Vincent is one of the instructors of the Python Masterclass")
 elif name == "Anushree":
     print("Anushree is the AWS support person during the Python Masterclass")
+elif name=="Rabindra":
+    print("Rabindra is one of the Attendee of the Python Masterclass")
 else:
     print("Name is unknown, not sure what to print about this person.")
