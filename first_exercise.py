@@ -23,3 +23,22 @@ else:
     print("Name is unknown, not sure what to print about this person.")
 
 # 2nd test comment for github upload issue
+
+# Homework 2: Classes
+# import class
+import well_classes as wc
+
+# instantiate wells
+well1 = wc.well(x=0, y=0, exrate=0.3, cas_rad=0.5)
+well2 = wc.well(x=8, y=5, exrate=10, cas_rad=3)
+
+# instantiate well field
+wfield = wc.wellField("Dutton Park")
+# add wells to field
+wfield.addWell(well1)
+wfield.addWell(well2)
+
+
+print(f"Well field {wfield.name} contains {str(wfield.well_cnt)} wells:\n")
+print(wfield.listWells())
+
