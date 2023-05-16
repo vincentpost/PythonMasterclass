@@ -11,7 +11,7 @@ to the conditionals list below and adding a message to be printed to the
 screen. 
 """
 
-name = "YourName"
+name = "YourName" # I could edit on the website
 
 if name == "Vincent":
     print("Vincent is one of the instructors of the Python Masterclass")
