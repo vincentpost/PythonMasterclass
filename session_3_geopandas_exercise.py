@@ -23,7 +23,9 @@ set_data_dir(new_wf)
 print("new working folder: "  + new_wf)
 
 print( "reading input data file...")
-df = pd.read_excel("D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Inputs/data/dam_bathymetry.xlsx",skiprows=5,usecols="B,E,F",header=None,names=["z", "easting", "northing"],)
+file_name=r'dam_bathymetry.xlsx'
+file_path =os.path.join(new_wf,file_name)
+df = pd.read_excel(file_path,skiprows=5,usecols="B,E,F",header=None,names=["z", "easting", "northing"],)
 print( "File loaded successfully !!")
 
 idx = df['z'] == 0
@@ -42,17 +44,27 @@ gdf = gpd.GeoDataFrame(
     crs="epsg:32754",
 )
 
-#Create the folder tos ave the shp output:
-os.mkdir("D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Outputs/dam_bathymetry")
+#Create the folder to save the shp output:
+folder_path_save_points="D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Outputs/dam_bathymetry"
+
+if not os.path.exists(folder_path_save_points):
+    os.makedirs(folder_path_save_points)
+    print('Folder :' + folder_path_save_points + r' was created !')
+
 folder_path_results = r"D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Outputs/dam_bathymetry"
 shp_name = r"dam_bathymetry.shp"
 shp_path =os.path.join(folder_path_results,shp_name)
+
 #save the geodataframe to a shapefile
-gdf.to_file(shp_path)
+if not os.path.exists(shp_path):
+    gdf.to_file(shp_path)
+    print('Layer :' + shp_path + r' did not exits and was created !')
+
 
 print(r"Shapefile crated successfully at :" + shp_path)
 
 # %%
+###################################################################################################
 # Load a shapefile with a helper polygon
 path_to_load =os.path.join (new_wf,r"helper_poly")
 path_shp_helper =os.path.join(path_to_load, r"helper_poly.shp")
@@ -102,6 +114,61 @@ print(r'Plotting the points in a gridmesh...')
 plt.plot(X, Y, 'k.')
 plt.plot(x, y, 'r.')
 print(r'Plot created successfully !')
+
+
+#%%
+######################################################################################
+# 2D Interpolation of elevation points + 3D plots of different interpolations methods
+
+folder_path_results = r"D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Outputs"
+
+cl_levels = np.arange(-2.75, 0, 0.25)
+fig3d = plt.figure()
+fig_contours, axs_contours = plt.subplots(ncols=3)
+
+list_of_methods = ["nearest", "cubic", "linear"]
+
+for i, method in enumerate(list_of_methods):
+    zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=method)
+
+    ax = axs_contours[i]
+    cs = ax.contourf(X, Y, zi, cl_levels)
+
+    # create 3D figure  
+    ax = fig3d.add_subplot(1, 3, i+1, projection='3d')
+    ax.plot_wireframe(X, Y, zi, rstride=4, cstride=4) # rstride & cstride control the number fo lines 
+    ax.scatter(x, y, z, color='k')
+    
+    # Helper points
+    ax.scatter(x[z==-0.20], y[z==-0.20], z[z==-0.20], color='r')
+
+
+# here you create a hash list / dictionary to make the interpolation
+lvl_lookup = dict(zip(cs.levels, cs.collections))
+
+level_list = []
+poly_list = []
+for k, v in lvl_lookup.items():
+    level_list.append(k)
+    xys = v.get_paths()
+    xy = xys[0].to_polygons()[0]
+    poly_list.append(shg.Polygon(xy))
+
+# Folder to create teh 3d interpolations:
+folder_path_contours = os.path.join(folder_path_results,r'interpolated_contours')
+
+if not os.path.exists(folder_path_contours):
+    os.makedirs(folder_path_contours)
+    print('Folder :' + folder_path_contours + r' was created !')
+
+gdf = gpd.GeoDataFrame(data={'level': level_list}, geometry=poly_list, crs="epsg:32754")
+
+# create the files with the resutls of each interpolation method:
+for method in list_of_methods:
+    shp_file_name = r'interpolated_contours_' + str(method) + r'.shp'
+    shp_path =os.path.join(folder_path_contours,shp_file_name)
+    gdf.to_file(shp_path)
+print( r'All the interpoaltion alternatives were saved at: ' + folder_path_contours)
 
 
 #%%
