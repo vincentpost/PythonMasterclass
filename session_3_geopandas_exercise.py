@@ -110,7 +110,6 @@ print(r'Plot created successfully !')
 
 folder_path_results = r"D:/00_GPM/09_Tutorilas_notes/Python_Training_AWS/Outputs"
 
-
 cl_levels = np.arange(-2.75, 0, 0.25)
 fig3d = plt.figure()
 fig_contours, axs_contours = plt.subplots(ncols=3)
@@ -158,13 +157,14 @@ for method in list_of_methods:
     shp_path =os.path.join(folder_path_contours,shp_file_name)
     gdf.to_file(shp_path)
 print( r'All the interpoaltion alternatives were saved at: ' + folder_path_contours)
+
+
+#%%
 ###############################################################################################################
 
-# %%
 z_min = int(np.nanmin(zi) * 100) / 100
 wls = np.arange(-0.2, z_min, -0.01)
 
-# %%
 A = []
 V = []
 for wl in wls:
@@ -177,7 +177,6 @@ df = pd.DataFrame(index=wls)
 df['V'] = V
 df['A'] = A
 
-# %%
 # Area
 p_coef_A = np.polyfit(wls, A, 6)
 p_func_A = np.poly1d(p_coef_A)
@@ -186,7 +185,7 @@ p_func_A = np.poly1d(p_coef_A)
 p_coef_V = np.polyfit(wls, V, 4)
 p_func_V = np.poly1d(p_coef_V)
 
-# %%
+
 fig_lines, axs = plt.subplots(ncols=2)
 
 # Area
@@ -205,3 +204,5 @@ ax.set_ylabel("Volume (m$^3$)")
 for ax in axs:
     ax.set_xlabel("Water level (m)")
     ax.grid(ls=":")
+
+# %%
