@@ -8,9 +8,9 @@ from scipy.interpolate import griddata
 import shapely.geometry as shg
 
 # %%
-# from pyproj.datadir import set_data_dir
+from pyproj.datadir import set_data_dir
 
-# set_data_dir("c:/Users/vince/anaconda3/envs/geopandas_env/Library/share/proj/")
+set_data_dir("c:/Users/PRI258/anaconda3/envs/geopandas_env/Library/share/proj/")
 # set_data_dir("c:/Users/VincentPost/anaconda3/envs/geopandas_env/Library/share/proj/")
 
 # %%
@@ -25,7 +25,7 @@ df = pd.read_excel(
 # %%
 idx = df['z'] == 0
 df = df.loc[~idx]
-
+# ~ reverses the True and False values 
 # %%
 pt_list = []
 for index, row in df.iterrows():
@@ -158,3 +158,5 @@ ax.set_ylabel("Volume (m$^3$)")
 for ax in axs:
     ax.set_xlabel("Water level (m)")
     ax.grid(ls=":")
+
+plt.show
