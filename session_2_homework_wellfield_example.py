@@ -1,13 +1,16 @@
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
 
 # %%
 # Define the well class
 class Well:
-    def __init__(self, x0, y0, Q, rw):
-        self._x0 = float(x0); 
+    
+    def __init__(self, x0, y0, Q, rw): # editor.inlayHints.enabled
+    
+        self._x0 = float(x0)
         self._y0 = float(y0)
-        self._rw = rw; 
+        self._rw = rw 
         self._rwsq = rw ** 2
         self._Q = Q
     def __repr__(self):
@@ -31,10 +34,15 @@ class WellField:
         self._transmissivity = T
         self._wells = wells
 
-    def plot(self, x, y):
+    def calculate(self, x, y):
         h = np.zeros_like(x)
         for w in self._wells: 
             h = h + w.head(x, y, self._transmissivity)
+        
+        return h
+
+    def plot(self, x, y):
+        h = self.calculate(x, y)
 
         fig, ax = plt.subplots()
         cf = ax.contourf(x, y, h)
