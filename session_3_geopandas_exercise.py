@@ -8,9 +8,9 @@ from scipy.interpolate import griddata
 import shapely.geometry as shg
 
 # %%
-# from pyproj.datadir import set_data_dir
+from pyproj.datadir import set_data_dir
 
-# set_data_dir("c:/Users/vince/anaconda3/envs/geopandas_env/Library/share/proj/")
+set_data_dir("c:/Users/vince/anaconda3/envs/geopandas_env/Library/share/proj/")
 # set_data_dir("c:/Users/VincentPost/anaconda3/envs/geopandas_env/Library/share/proj/")
 
 # %%
@@ -45,6 +45,7 @@ gdf.to_file("data/dam_bathymetry/dam_bathymetry.shp")
 
 # %%
 gdf_h = gpd.read_file("data/helper_poly/helper_poly.shp")
+print(gdf_h)
 
 # %%
 helper_poly = gdf_h['geometry'][0]
@@ -96,7 +97,6 @@ for i, method in enumerate(["nearest", "cubic", "linear"]):
     # Helper points
     ax.scatter(x[z==-0.20], y[z==-0.20], z[z==-0.20], color='r')
 
-
 # %%
 lvl_lookup = dict(zip(cs.levels, cs.collections))
 
@@ -109,7 +109,7 @@ for k, v in lvl_lookup.items():
     poly_list.append(shg.Polygon(xy))
 
 # %%
-os.mkdir("data/interpolated_contours")
+# os.mkdir("data/interpolated_contours")
 gdf = gpd.GeoDataFrame(data={'level': level_list}, geometry=poly_list, crs="epsg:32754")
 gdf.to_file(f"data/interpolated_contours/interpolated_contours_{method}.shp")
 
@@ -139,6 +139,9 @@ p_func_A = np.poly1d(p_coef_A)
 p_coef_V = np.polyfit(wls, V, 4)
 p_func_V = np.poly1d(p_coef_V)
 
+np.savetxt(f"p_coef_V_{method}.dat", p_coef_V)
+np.savetxt(f"p_coef_A_{method}.dat", p_coef_A)
+
 # %%
 fig_lines, axs = plt.subplots(ncols=2)
 
@@ -158,3 +161,5 @@ ax.set_ylabel("Volume (m$^3$)")
 for ax in axs:
     ax.set_xlabel("Water level (m)")
     ax.grid(ls=":")
+
+plt.show()
