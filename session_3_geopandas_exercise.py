@@ -40,8 +40,7 @@ gdf = gpd.GeoDataFrame(
 )
 
 # %%
-# make folder first
-os.mkdir("data/dam_bathymetry/")
+# os.mkdir("data/dam_bathymetry/")
 gdf.to_file("data/dam_bathymetry/dam_bathymetry.shp")
 
 # %%
@@ -110,7 +109,7 @@ for k, v in lvl_lookup.items():
     poly_list.append(shg.Polygon(xy))
 
 # %%
-os.mkdir("data/interpolated_contours")
+# os.mkdir("data/interpolated_contours")
 gdf = gpd.GeoDataFrame(data={'level': level_list}, geometry=poly_list, crs="epsg:32754")
 gdf.to_file(f"data/interpolated_contours/interpolated_contours_{method}.shp")
 
