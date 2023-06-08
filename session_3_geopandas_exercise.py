@@ -10,11 +10,7 @@ import shapely.geometry as shg
 # %%
 from pyproj.datadir import set_data_dir
 
-<<<<<<< HEAD
-set_data_dir("c:/Users/PRI258/anaconda3/envs/geopandas_env/Library/share/proj/")
-=======
 set_data_dir("c:/Users/vince/anaconda3/envs/geopandas_env/Library/share/proj/")
->>>>>>> f554e1f5370679e15cc023b1bea07f0e30545ba3
 # set_data_dir("c:/Users/VincentPost/anaconda3/envs/geopandas_env/Library/share/proj/")
 
 # %%
@@ -108,11 +104,8 @@ for i, method in enumerate(["nearest", "cubic", "linear"]):
     # Helper points
     ax.scatter(x[z==-0.20], y[z==-0.20], z[z==-0.20], color='r')
 
-<<<<<<< HEAD
 plt.show()
 
-=======
->>>>>>> f554e1f5370679e15cc023b1bea07f0e30545ba3
 # %%
 lvl_lookup = dict(zip(cs.levels, cs.collections))
 
@@ -178,9 +171,6 @@ for ax in axs:
     ax.set_xlabel("Water level (m)")
     ax.grid(ls=":")
 
-<<<<<<< HEAD
-plt.show
-# %%
-=======
 plt.show()
->>>>>>> f554e1f5370679e15cc023b1bea07f0e30545ba3
+
+# %%
