@@ -1,3 +1,14 @@
 __pycache__/
+.ipynb_checkpoints/
 data/dam_bathymetry/
 data/interpolated_contours/
+
+daily_wl&meteo_data.xlsx
+p_coef_A_linear.dat
+p_coef_V_linear.dat
+prepare_mass_balance.py
+data/daily_wl&meteo_data_synthetic_edits.xlsx
+water_balance_data_with_mass_balance.xlsx
+water_balance_data_with_mass_balance_excel_formulas.xlsx
+session_4_time_series_with_answer.ipynb
+water_balance.png
