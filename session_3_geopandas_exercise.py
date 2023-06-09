@@ -25,7 +25,7 @@ df = pd.read_excel(
 # %%
 idx = df['z'] == 0
 df = df.loc[~idx]
-
+# ~ reverses the True and False values 
 # %%
 pt_list = []
 for index, row in df.iterrows():
@@ -38,10 +38,17 @@ gdf = gpd.GeoDataFrame(
     geometry=pt_list, 
     crs="epsg:32754",
 )
-
+print(gdf)
 # %%
-# os.mkdir("data/dam_bathymetry/")
+
+#os.mkdir("data/dam_bathymetry/")
+
+directory = "data/dam_bathymetry/"
+if not os.path.exists(directory):
+    os.makedirs(directory)
 gdf.to_file("data/dam_bathymetry/dam_bathymetry.shp")
+
+
 
 # %%
 gdf_h = gpd.read_file("data/helper_poly/helper_poly.shp")
@@ -96,6 +103,8 @@ for i, method in enumerate(["nearest", "cubic", "linear"]):
     
     # Helper points
     ax.scatter(x[z==-0.20], y[z==-0.20], z[z==-0.20], color='r')
+
+plt.show()
 
 # %%
 lvl_lookup = dict(zip(cs.levels, cs.collections))
@@ -163,3 +172,5 @@ for ax in axs:
     ax.grid(ls=":")
 
 plt.show()
+
+# %%
