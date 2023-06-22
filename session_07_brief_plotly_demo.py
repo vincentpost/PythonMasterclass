@@ -1,6 +1,7 @@
 # %%
 import pandas as pd
 import plotly.express as px
+import matplotlib.dates as mdates
 
 # %% 
 # Read the data from excel using pandas
