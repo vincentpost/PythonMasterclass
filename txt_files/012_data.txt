@@ -1,0 +1,6 @@
+012345 Station name
+Calculated value
+m3/hr
+06/09/2023	0.0
+06/10/2023	1.0
+06/11/2023	2.0
